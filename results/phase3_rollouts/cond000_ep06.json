@@ -1,0 +1,37 @@
+{
+ "episode": "cond000_ep06",
+ "condition": 0,
+ "time_scale": 2.0,
+ "steps": 568,
+ "success": true,
+ "success_step": 506,
+ "progress_max": 1.0,
+ "tracking_rms_deg": 1.0992301270232447,
+ "tracking_max_deg": 5.4907754133949105,
+ "bottle_z_start": -0.02023729309439659,
+ "bottle_z_max": 0.13724392652511597,
+ "bottle_z_end": 0.13724392652511597,
+ "bottle_lift": 0.15748121961951256,
+ "ee_to_bottle_min": 0.20314450562000275,
+ "cup_moved_m": 1.7253363182589965e-07,
+ "bottle_vs_reference": {
+  "gap_at_grasp_m": 0.006518092699770919,
+  "gap_max_m": 0.014003526410109357,
+  "gap_end_m": 0.013518352071467484
+ },
+ "pour_closest": {
+  "tilt_max_deg": 82.42390010659106,
+  "mouth_cup_xy_min": 0.007791572673140952,
+  "mouth_above_rim_at_closest": 0.05950702281965681,
+  "held_max": 76,
+  "cup_radius": 0.046756938099861145
+ },
+ "pour_steps": {
+  "evaluated": 350,
+  "tilt_ok": 76,
+  "over_cup_ok": 96,
+  "above_rim_ok": 350,
+  "tilt_and_over_cup": 76,
+  "all_three": 76
+ }
+}
