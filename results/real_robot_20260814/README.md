@@ -11,7 +11,8 @@ cup`, checkpoint 9999 (10k steps), open-loop horizon 8, 1050 steps (70 s) per ep
 
 `episodes.csv` indexes the episodes (recording and run timestamps, raw score). The videos
 are not in the repository (compressed copies 0.2-0.5 MB each, originals 22-31 MB each;
-`results/README.md`). `first_frames/` holds the dual-view first frame of the run that produced
+`results/README.md`); a demo video is public: [Demo video (Google Drive)](https://drive.google.com/file/d/1L6XNSg5zBRMjBuRxUfQErBS44NhcPLfO/view?usp=drive_link).
+`first_frames/` holds the dual-view first frame of the run that produced
 ep09 and of the run that produced ep10-ep13, used to check placement.
 
 | episode | time | steps | raw score | outcome |

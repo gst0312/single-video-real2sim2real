@@ -1,6 +1,6 @@
 """Phase 2: replay a synthesised reference trajectory with physics, score it, render it.
 
-This is the piece PolaRiS does not ship (plan §2, second block). The episode loop is
+This is the piece PolaRiS does not ship. The episode loop is
 `polaris/scripts/eval.py` with one substitution: where eval asks a policy for an action,
 this reads the next row of a reference trajectory from `synthesize_trajectories.py`. What
 stays theirs is everything around it - `env.reset(object_positions=...)` places the objects
@@ -61,7 +61,7 @@ import torch  # noqa: E402
 from isaaclab_tasks.utils import parse_env_cfg  # noqa: E402
 from PIL import Image  # noqa: E402
 
-import polaris_lfhv.environments  # noqa: E402,F401
+import r2s2r.environments  # noqa: E402,F401
 
 OBS_SIZE = (320, 180)   # width, height: the official cotrain dataset's image size
 

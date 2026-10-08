@@ -57,7 +57,7 @@ import numpy as np  # noqa: E402
 import torch  # noqa: E402
 from isaaclab_tasks.utils import parse_env_cfg  # noqa: E402
 
-import polaris_lfhv.environments  # noqa: E402,F401
+import r2s2r.environments  # noqa: E402,F401
 
 
 def main():

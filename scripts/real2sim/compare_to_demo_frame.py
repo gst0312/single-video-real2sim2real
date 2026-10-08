@@ -56,7 +56,7 @@ import torch  # noqa: E402
 from isaaclab_tasks.utils import parse_env_cfg  # noqa: E402
 from PIL import Image  # noqa: E402
 
-import polaris_lfhv.environments  # noqa: E402,F401
+import r2s2r.environments  # noqa: E402,F401
 
 
 def ray_to_table(px, pos, rot, fx, fy, cx, cy, z):

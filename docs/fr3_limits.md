@@ -59,7 +59,7 @@ j6       0.4398  ..  3.7525
 j7      -2.8973  ..  2.8973
 ```
 
-This array is `polaris_lfhv.limits.LIMITS_LOW / LIMITS_HIGH`; the environment narrows the
+This array is `r2s2r.limits.LIMITS_LOW / LIMITS_HIGH`; the environment narrows the
 simulated arm to the same array at runtime (`PourMustardEnv.FR3_PANDA_LIMITS`). PolaRiS's
 reset pose (0, -π/5, 0, -4π/5, 0, 3π/5, 0) = (0, -0.6283, 0, -2.5133, 0, 1.8850, 0) lies well
 inside it; j6 at 1.8850 is far from the FR3 floor of 0.4398.
@@ -135,14 +135,14 @@ These are continuous-time limits of the 1 kHz control loop. Differencing a 15 Hz
 stream twice does not measure the same quantity: real teleoperated episodes that the arm has
 executed reach 20.77 rad/s² that way (`scripts/datagen/measure_motion_budget.py`), so the
 generator's acceleration ceiling is that measured maximum (20.8), and jerk (real maximum
-513) is reported but not gated. See `polaris_lfhv.limits`.
+513) is reported but not gated. See `r2s2r.limits`.
 
 ## The deployment soft wall
 
 The lab's FR3 runs behind a soft-safety controller whose joint-velocity limits are stricter
 than any of the above: hard 2.075 rad/s on j1-j4 and 2.51 on j5-j7, with a 0.5 rad/s margin
 at which the controller starts pushing back, i.e. 1.575 / 2.01 rad/s. The generator's
-constant ceiling is this wall (`polaris_lfhv.limits.DEPLOY_V_SOFT`), which can only make the
+constant ceiling is this wall (`r2s2r.limits.DEPLOY_V_SOFT`), which can only make the
 gate safer. The values were transcribed from the robot's `config/fr3/franka_hardware.yaml`
 and should be re-read on the robot before any deployment; the 2026-08-14 test did not do
 this and ran on the transcription.

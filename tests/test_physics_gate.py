@@ -6,7 +6,7 @@ import pathlib
 
 import pytest
 
-from polaris_lfhv.physics_gate import (CUP_MAX, GAP_MAX, LIFT_MIN, passes_physics_gate,
+from r2s2r.physics_gate import (CUP_MAX, GAP_MAX, LIFT_MIN, passes_physics_gate,
                                        physics_gate_reasons)
 
 REPORTS = sorted((pathlib.Path(__file__).resolve().parents[1] / "results/phase3_rollouts").glob("cond000_ep*.json"))

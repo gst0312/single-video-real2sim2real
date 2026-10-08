@@ -18,7 +18,7 @@ import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from polaris_lfhv.limits import HOME, RATE_HZ, smoothstep  # noqa: E402
+from r2s2r.limits import HOME, RATE_HZ, smoothstep  # noqa: E402
 
 UPRIGHT = np.array([np.sqrt(0.5), np.sqrt(0.5), 0.0, 0.0])   # mesh +Y up -> world +Z
 CUP = np.array([0.47, 0.155, -0.019])                          # a layout from the sampler's range

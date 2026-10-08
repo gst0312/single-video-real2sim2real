@@ -3,14 +3,14 @@
 Three things the pipeline does to every episode, run here on `data/sample_episode.json`
 without jax, Isaac or a GPU:
 
-1. the kinematic gate (`polaris_lfhv.limits`): joint positions inside the FR3-and-Panda
+1. the kinematic gate (`r2s2r.limits`): joint positions inside the FR3-and-Panda
    intersection, joint velocity inside libfranka's position-dependent envelope capped by the
    deployment soft wall, acceleration under the measured ceiling. A copy of the episode
    played at double speed is shown failing, and the synthesiser's remedy - slow the same
    motion down by the measured overshoot - is shown fixing it;
-2. the pour criterion (`polaris_lfhv.pour_geometry`): tilt, mouth-to-cup distance and
+2. the pour criterion (`r2s2r.pour_geometry`): tilt, mouth-to-cup distance and
    mouth-above-rim per step, with the 15-step dwell, on the sample's object track;
-3. the physics gate (`polaris_lfhv.physics_gate`) on the three real replay reports under
+3. the physics gate (`r2s2r.physics_gate`) on the three real replay reports under
    `results/phase3_rollouts/`, plus one synthetic failure.
 
     python examples/gate_and_rubric_demo.py
@@ -28,9 +28,9 @@ import numpy as np
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from polaris_lfhv import limits as L  # noqa: E402
-from polaris_lfhv.physics_gate import passes_physics_gate, physics_gate_reasons  # noqa: E402
-from polaris_lfhv.pour_geometry import DwellCounter, pour_condition, pour_measurements  # noqa: E402
+from r2s2r import limits as L  # noqa: E402
+from r2s2r.physics_gate import passes_physics_gate, physics_gate_reasons  # noqa: E402
+from r2s2r.pour_geometry import DwellCounter, pour_condition, pour_measurements  # noqa: E402
 
 
 def resample(qpos, factor):

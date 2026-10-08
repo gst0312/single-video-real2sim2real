@@ -9,7 +9,7 @@ From one human demonstration to training data. The order is the dependency order
 3. `synthesize_trajectories.py` assembles R2R2R's state machine, jaxmp batched IK and trajgen
    resampling into an offline generator of reference joint trajectories, and gates them on
    the FR3-and-Panda limits and the motion budget. No Isaac dependency; runs in the synthesis
-   venv. The gate's maths is `polaris_lfhv.limits`.
+   venv. The gate's maths is `r2s2r.limits`.
 4. `preview_episode.py` renders a synthesised episode kinematically (joints and object poses
    written in, no physics) to check the shape of the motion before spending physics time (Isaac).
 5. `replay_reference_episode.py` replays a reference trajectory with physics: the arm is
@@ -17,7 +17,7 @@ From one human demonstration to training data. The order is the dependency order
    pour, and both camera views are rendered in the same pass. This is the physics gate and
    the source of the training observations (Isaac). `--episodes <dir> --shard i/n` runs a
    directory in one process per GPU.
-6. `build_rlds.py` writes the episodes that pass the physics gate (`polaris_lfhv.physics_gate`)
+6. `build_rlds.py` writes the episodes that pass the physics gate (`r2s2r.physics_gate`)
    as a DROID-RLDS dataset in the official co-training schema (RLDS venv).
 7. `check_units.py` pushes the written dataset through openpi's own loader and prints the
    actions as the model sees them, to catch a unit or convention error before training

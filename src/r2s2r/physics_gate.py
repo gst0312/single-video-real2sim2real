@@ -5,7 +5,7 @@ episode, failures included. The gate reads that report and keeps an episode only
 arm actually grasped the bottle, carried it along the reference, and did not knock the
 cup. Whether the pour landed in the cup is deliberately NOT a criterion: the rigid-follow
 assumption behind the synthesised trajectories does not model contact compliance or
-liquid, so it is not a fair reason to drop data (user decision, 2026-08-13). The rubric
+liquid, so it is not a fair reason to drop data (decision of 2026-08-13). The rubric
 still scores every episode; the gate is about executability, the rubric about the task.
 
 Shared by `scripts/datagen/build_rlds.py` (what gets written) and

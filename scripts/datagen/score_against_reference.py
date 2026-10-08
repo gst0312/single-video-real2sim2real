@@ -4,8 +4,8 @@ The gates say whether an episode is executable. They say nothing about whether i
 the way the demonstration is poured from, and that is the thing that went wrong twice: a
 top grasp passes every limit while pouring by swinging the arm through the cup.
 
-So this scores the shape of the motion, in the same four numbers measured on LFHV's last
-round (82 generated episodes, `data/r2r2r_gs/hf_v1_rollouts`, FR3 forward kinematics on
+So this scores the shape of the motion, in the same four numbers measured on an earlier
+lab pipeline's generated episodes for this task (82 episodes, FR3 forward kinematics on
 their `joint_position`):
 
     approach below horizontal at the grasp   23 - 29 deg
@@ -32,7 +32,7 @@ import numpy as np
 from jaxmp import JaxKinTree
 from jaxmp.extras.urdf_loader import load_urdf
 
-# measured on LFHV's generated qpos; (low, high, tolerance) in the metric's own unit
+# measured on the earlier pipeline's generated qpos; (low, high, tolerance) in the metric's own unit
 REFERENCE = {
     "approach_deg": (23.0, 29.0, 8.0),
     "grasp_height_m": (0.126, 0.142, 0.03),

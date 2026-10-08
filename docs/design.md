@@ -37,8 +37,8 @@ and dependencies follow PolaRiS.
 1. The pour criterion. PolaRiS ships `reach`, `lift` and `is_within_xy`; pouring needs the
    bottle tilted over the cup's mouth, above the rim, held for a while. Written as a closure
    factory in PolaRiS's style, geometry read from the assets' bounding boxes at run time,
-   thresholds measured on the demonstration (`polaris_lfhv/environments/rubrics.py`,
-   `polaris_lfhv/pour_geometry.py`). `reach` is measured to the object's bounding-box centre
+   thresholds measured on the demonstration (`r2s2r/environments/rubrics.py`,
+   `r2s2r/pour_geometry.py`). `reach` is measured to the object's bounding-box centre
    rather than its mesh origin, because GSWorld's bottle mesh has its origin at the base and
    PolaRiS's 0.2 m threshold would otherwise never fire on a held bottle (measured minimum
    0.221 m).
@@ -49,7 +49,7 @@ and dependencies follow PolaRiS.
    loader (`scripts/datagen/build_rlds.py`, `check_units.py`).
 4. The synthesiser's assembly: Real2Render2Real's state machine, IK controller and trajgen
    organs taken out of their simulator class into an offline script, plus the gates
-   (`scripts/datagen/synthesize_trajectories.py`, `polaris_lfhv/limits.py`).
+   (`scripts/datagen/synthesize_trajectories.py`, `r2s2r/limits.py`).
 
 Everything else is a thin wrapper around an upstream script or a measurement tool; the
 per-file account is `docs/provenance.md`.
@@ -87,6 +87,9 @@ per-file account is `docs/provenance.md`.
   value belongs to a DROID-scale co-training mix; openpi's default and the single-task
   references use 32), 10k steps, official learning-rate schedule and norm stats, wrist camera
   in (the pour ends by aiming the spout, when the third-person view is occluded by the arm).
+  The config is registered with openpi as `pi05_droid_jointpos_polaris_pourmustard`: the
+  upstream base config's name with the task appended, kept so that the documented training
+  and serving commands stay valid.
 - Evaluation on held-out layouts from the same sampler, 70 s horizon so that no episode is
   truncated before the pour, several checkpoints rather than one.
 

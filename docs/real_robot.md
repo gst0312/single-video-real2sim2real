@@ -158,7 +158,7 @@ the measured peak is 0.76 of that wall, so a trigger means something is wrong.
 ## Running
 
 On the server, with this repository on `PYTHONPATH` (the training config registers only when
-`polaris_lfhv` is importable; otherwise openpi reports `Config ... not found`):
+`r2s2r` is importable; otherwise openpi reports `Config ... not found`):
 
 ```bash
 cd "$POLARIS_ROOT/third_party/openpi"

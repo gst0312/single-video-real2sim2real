@@ -493,8 +493,8 @@ def patch_eval_source(source, path, extra=()):
         if found != 1:
             raise RuntimeError(
                 "patch %r does not apply to %s (found %d exact matches, expected 1).\n"
-                "The upstream script changed. Re-read PolaRis_LFHV/docs/real_robot.md "
-                "docs/real_robot.md and update JOINTPOS_PATCHES before going anywhere near the robot.\n"
+                "The upstream script changed. Re-read docs/real_robot.md and update "
+                "JOINTPOS_PATCHES before going anywhere near the robot.\n"
                 "Expected to find:\n%s" % (name, path, found, old)
             )
         source = source.replace(old, new, 1)
@@ -510,7 +510,7 @@ def patch_eval_source(source, path, extra=()):
 # is outside what the training data could contain, and ends the rollout gracefully.
 #
 # Position limits: the FR3 n Panda intersection the generator was capped at
-# (PolaRis_LFHV/docs/fr3_limits.md). Velocity wall: the soft wall the training data was
+# (docs/fr3_limits.md). Velocity wall: the soft wall the training data was
 # generated under; the final checkpoint peaked at 0.76 x this over 2100 logged steps.
 # ----------------------------------------------------------------------------------
 JOINT_MIN = (-2.8973, -1.7628, -2.8973, -3.0718, -2.8763, 0.4398, -2.8973)

@@ -1,12 +1,12 @@
 """Run PolaRiS's evaluation on our environment.
 
-plan §4 stage 5 says sim evaluation is `polaris/scripts/eval.py` plus its `DroidJointPos`
-client with zero new code, and that still holds: the episode loop, the rubric handling, the
+Simulation evaluation is `polaris/scripts/eval.py` plus its `DroidJointPos` client with
+zero new code, and that holds: the episode loop, the rubric handling, the
 CSV and the video all come from their script, untouched. What is missing is only that their
 script imports `polaris.environments`, which registers their six environments and not ours,
 so `parse_env_cfg("DROID-PourMustard")` raises NameNotFound before anything else happens.
 
-Registering ours is awkward for one reason: Isaac has to be running before `polaris_lfhv
+Registering ours is awkward for one reason: Isaac has to be running before `r2s2r
 .environments` can be imported (it pulls in isaaclab), and their script launches Isaac
 inside `main`, then immediately uses the gym registry. The only seam between those two is
 the AppLauncher itself, so that is what gets wrapped - the app comes up exactly as before,
@@ -58,7 +58,7 @@ class _RegisterOurs(_Launcher):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        import polaris_lfhv.environments  # noqa: F401  (its import runs gym.register)
+        import r2s2r.environments  # noqa: F401  (its import runs gym.register)
 
         import isaaclab_tasks.utils as _tasks
 

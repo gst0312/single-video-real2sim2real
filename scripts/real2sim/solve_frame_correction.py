@@ -27,7 +27,7 @@ from scipy.spatial import cKDTree
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from polaris_lfhv.alignment import umeyama  # noqa: E402
+from r2s2r.alignment import umeyama  # noqa: E402
 
 
 def main():

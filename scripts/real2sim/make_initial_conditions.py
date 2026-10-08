@@ -20,11 +20,11 @@ Both references perturb around the demonstration instead:
   `(rand*2-1) * 0.06` about its demo pose and generates new starts with
   `generate_directional_starts(magnitude=0.1, direction_weight=0.7, perp_variation=0.10)`,
   i.e. biased along the demonstrated direction.
-- LFHV's last round is stricter and is what this follows (user's call, 2026-08-13):
-  "Only the mustard bottle is randomised, matching eval, so the cup stays at its demo"
-  (`tools/datagen/gen_kinematic_states.py:66`), with the bottle drawn
-  `(rand*2-1) * 0.05` in xy and `+-10 degrees` of yaw (their L419-425; the file's own
-  header comment still says the older +-0.06 / +-pi/8, the code is the authority).
+- an earlier lab pipeline for this task is stricter and is what this follows (decision of
+  2026-08-13): only the mustard bottle is randomised, matching its evaluation, so the cup
+  stays at its demo pose, with the bottle drawn `(rand*2-1) * 0.05` in xy and
+  `+-10 degrees` of yaw (read from its code; its header comment still gives the older
+  +-0.06 / +-pi/8).
 
 Both object meshes were scanned with their long axis along +Y and their base at y = 0, so
 standing one upright is a +90 degree rotation about x; after that the base sits exactly at
@@ -116,14 +116,14 @@ def main():
                         "of spawning inside the surface")
     p.add_argument("--bottle-xy", type=float, default=0.05,
                    help="half-width of the bottle's uniform xy draw about the demo pose "
-                        "(LFHV's last round; r2r2r uses 0.06)")
+                        "(the earlier lab pipeline's value; r2r2r uses 0.06)")
     p.add_argument("--bottle-yaw-deg", type=float, default=10.0,
                    help="half-width of the bottle's uniform yaw draw about the demo yaw")
     p.add_argument("--cup-xy", type=float, default=0.03,
-                   help="same for the cup. LFHV's last round used 0 - the cup never moves - "
+                   help="same for the cup. The earlier lab pipeline used 0 - the cup never moves - "
                         "but a policy trained on that learns the pour target as a fixed "
-                        "place in the workspace instead of looking for it (2026-08-13 user "
-                        "decision), so the cup gets a small draw of its own. Small on "
+                        "place in the workspace instead of looking for it (decision of "
+                        "2026-08-13), so the cup gets a small draw of its own. Small on "
                         "purpose: the pour is retargeted onto it, and that only behaves "
                         "while the displacement stays in the interpolation's regime")
     p.add_argument("--cup-yaw-deg", type=float, default=15.0)

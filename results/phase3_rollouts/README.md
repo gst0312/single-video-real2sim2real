@@ -26,5 +26,5 @@ pour target follows the cup.
 
 Each `.json` is the complete report of one episode (rubric, tracking error, bottle-vs-
 reference gap, cup displacement, pour-trace statistics), as written by
-`scripts/datagen/replay_reference_episode.py`. The physics gate in `polaris_lfhv.physics_gate`
+`scripts/datagen/replay_reference_episode.py`. The physics gate in `r2s2r.physics_gate`
 reads exactly these fields; `tests/test_physics_gate.py` and the example use these files.

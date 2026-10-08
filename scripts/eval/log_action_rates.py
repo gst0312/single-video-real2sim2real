@@ -50,7 +50,7 @@ def _wrap(launcher_cls):
     class _RegisterOurs(launcher_cls):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            import polaris_lfhv.environments  # noqa: F401
+            import r2s2r.environments  # noqa: F401
 
             import isaaclab_tasks.utils as _tasks
             from eval_policy import EVAL_HORIZON_S

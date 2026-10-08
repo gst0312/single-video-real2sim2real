@@ -19,12 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-This licence covers the code and documentation written for this repository. It does
-not cover, and this repository does not contain, the Gaussian-splat scene assets,
-object meshes, camera calibrations or recordings derived from GSWorld
-(github.com/luccachiang/GSWorld), which carries no licence file; nor the PolaRiS,
-Real2Render2Real or openpi code, which stay under their own (MIT / Apache-2.0)
-licences in their own repositories.

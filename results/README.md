@@ -16,7 +16,8 @@ repository.
   replayed as absolute-position actions).
 - `real_robot_20260814/` — the first real-robot session: `episodes.csv` (recording and run
   ids, the raw score from the evaluation CSV, which recorded successes as 0.01), the
-  human-verified outcome table in its README, and two first-frame captures.
+  human-verified outcome table in its README, and two first-frame captures. The session's
+  demonstration video is public: [Demo video (Google Drive)](https://drive.google.com/file/d/1L6XNSg5zBRMjBuRxUfQErBS44NhcPLfO/view?usp=drive_link).
 - `trajectory_synthesis.md` — per-condition gate table of the first synthesis round.
 - `figures/` — eight frames: the demonstration beside the reconstructed scene, the
   environment's two views at a reset, three real-vs-sim frames at recorded joint angles, the
@@ -55,4 +56,5 @@ real-speed re-renders of three successful rollouts via `render_1x.py`; kinematic
 `cond000_ep02_*`, `cond020_ep07_*` (0.5-1.5 MB).
 
 Real-robot session 2026-08-14: thirteen compressed episode videos (960 px wide, 0.2-0.5 MB
-each) and the full-size originals (22-31 MB each), subject to the lab's permission.
+each) and the full-size originals (22-31 MB each), subject to the lab's permission; the
+demo video is already public on Google Drive (link above).

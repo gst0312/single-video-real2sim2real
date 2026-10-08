@@ -1,6 +1,6 @@
 """Turn physics-replayed episodes into a DROID-RLDS dataset openpi can train on.
 
-plan §2's third block. The schema is the official PolaRiS cotrain dataset
+The schema is the official PolaRiS cotrain dataset
 (`owhan/PolaRiS-datasets`, read field by field in docs/data_format.md), and the builder
 follows the official DROID RLDS builder template
 (`droid_dataset_builder/droid/droid.py`): the same
@@ -43,7 +43,7 @@ import tensorflow_datasets as tfds
 # the pure-numpy pieces live in the package so they can be tested without the heavy
 # dependencies; make the repository's src importable when the package is not installed
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from polaris_lfhv.physics_gate import CUP_MAX, GAP_MAX, LIFT_MIN, physics_gate_reasons  # noqa: E402
+from r2s2r.physics_gate import CUP_MAX, GAP_MAX, LIFT_MIN, physics_gate_reasons  # noqa: E402
 
 IMAGE_RES = (180, 320)          # height, width; the official cotrain dataset's size
 NAME = "pour_mustard"
@@ -54,13 +54,13 @@ def episode_files(root, lift_min, gap_max, cup_max):
 
     `--save-obs` writes an npz for every replayed episode, the failures included, so the
     gate has to be applied here or the dataset would teach the policy the misses too. The
-    criteria are the ones the physics gate is for (2026-08-13 user's call): did it actually
+    criteria are the ones the physics gate is for (decision of 2026-08-13): did it actually
     grasp, was the bottle knocked askew, did anything collide. Whether the pour would have
     landed in the cup is deliberately NOT a criterion - r2r2r's rigid-follow assumption does
     not model contact compliance or liquid, so it is not a fair thing to drop data over.
 
     Read from the report json the replay writes next to each npz; the criteria themselves
-    are `polaris_lfhv.physics_gate`, shared with `analyse_dataset.py`.
+    are `r2s2r.physics_gate`, shared with `analyse_dataset.py`.
     """
     kept, dropped = [], []
     for obs in sorted(Path(root).glob("*_obs.npz")):

@@ -1,8 +1,7 @@
 """Measure the Robotiq 2F-85 TCP in the flange frame, from the simulated articulation.
 
 The trajectory synthesis targets the FR3 flange with the grasp centre offset by the
-gripper's actual geometry, which plan §4 says to take from the nvidia_droid USD rather
-than assume. Here the environment is stepped to the open and the closed gripper state and
+gripper's actual geometry, taken from the nvidia_droid USD rather than assumed. Here the environment is stepped to the open and the closed gripper state and
 the two inner-finger pad bodies are read out; the grip centre is the midpoint of the pad
 centres at closure, and the closing axis is the direction the pads travel. Everything is
 expressed in the panda_link8 (flange) frame: link8 hangs off panda_link7 by the fixed
@@ -29,8 +28,8 @@ import numpy as np  # noqa: E402
 import torch  # noqa: E402
 from isaaclab_tasks.utils import parse_env_cfg  # noqa: E402
 
-import polaris_lfhv.environments  # noqa: E402,F401
-from polaris_lfhv.robot_links import collect_meshes, quat_to_mat  # noqa: E402
+import r2s2r.environments  # noqa: E402,F401
+from r2s2r.robot_links import collect_meshes, quat_to_mat  # noqa: E402
 
 LINK7_TO_LINK8 = np.array([0.0, 0.0, 0.107])
 

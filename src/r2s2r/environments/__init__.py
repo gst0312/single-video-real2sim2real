@@ -25,7 +25,7 @@ from polaris.environments.droid_cfg import EnvCfg as DroidCfg
 from polaris.environments.manager_based_rl_splat_environment import ManagerBasedRLSplatEnv
 from polaris.utils import DATA_PATH
 
-from polaris_lfhv.environments.rubrics import pour_mustard_rubric
+from r2s2r.environments.rubrics import pour_mustard_rubric
 
 
 @configclass
@@ -99,12 +99,12 @@ class PourMustardEnv(ManagerBasedRLSplatEnv):
         [-2.8763, 2.8763], [0.4398, 3.7525], [-2.8973, 2.8973]])
     #: Optional per-channel gain and offset applied to the wrist image after compositing.
     #:
-    #: Re-enabled 2026-08-13 (user decision): the wrist composite renders ~14% brighter
+    #: Re-enabled 2026-08-13: the wrist composite renders ~14% brighter
     #: than its target (per-channel real/sim 0.876/0.874/0.885 measured on the July
     #: frames). The global relight now sits halfway between GSWorld's native exposure and
-    #: the July fit (the user's split-the-difference call against the darker February HF
+    #: the July fit (a split-the-difference choice against the darker February teleoperation
     #: footage), so the wrist keeps just the pure July correction on top.
-    #: POLARIS_LFHV_WRIST_RESPONSE=0 always renders the raw composite.
+    #: R2S2R_WRIST_RESPONSE=0 always renders the raw composite.
     WRIST_RESPONSE = (np.array([0.876, 0.874, 0.885], dtype=np.float32), 0.0)
     #: subtree drawn by the raytracer even when the rest of the robot comes from splats.
     #: The wrist camera sits 8 cm from the gripper while the splat was reconstructed from a
@@ -116,14 +116,14 @@ class PourMustardEnv(ManagerBasedRLSplatEnv):
                  raytraced_gripper: bool = True, wrist_response: bool = True,
                  fr3_limits: bool = True, usd_file: str | None = None, **kwargs):
         self.blank_wrist = blank_wrist
-        # POLARIS_LFHV_WRIST_RESPONSE=0 renders the raw composite, for measuring the gap again
-        env_resp = os.environ.get("POLARIS_LFHV_WRIST_RESPONSE")
+        # R2S2R_WRIST_RESPONSE=0 renders the raw composite, for measuring the gap again
+        env_resp = os.environ.get("R2S2R_WRIST_RESPONSE")
         on = wrist_response if env_resp is None else env_resp not in ("0", "false", "False")
         self.wrist_response = self.WRIST_RESPONSE if on else None
         self.robot_splat = robot_splat
-        # POLARIS_LFHV_RAYTRACED_GRIPPER=0 puts the gripper back on the splats, which is what
+        # R2S2R_RAYTRACED_GRIPPER=0 puts the gripper back on the splats, which is what
         # GSWorld's own renders do; used when comparing against those renders directly.
-        env_gripper = os.environ.get("POLARIS_LFHV_RAYTRACED_GRIPPER")
+        env_gripper = os.environ.get("R2S2R_RAYTRACED_GRIPPER")
         self.raytraced_gripper = (raytraced_gripper if env_gripper is None
                                   else env_gripper not in ("0", "false", "False"))
         if usd_file is not None:
@@ -167,7 +167,7 @@ class PourMustardEnv(ManagerBasedRLSplatEnv):
                 prim_paths_expr=f"/World/envs/env_0/robot/{ply.stem.replace('-', '/')}",
                 reset_xform_properties=False,
             )
-        print(f"[polaris_lfhv] {len(more_splats)} link splats loaded, {skipped} left to the raytracer")
+        print(f"[r2s2r] {len(more_splats)} link splats loaded, {skipped} left to the raytracer")
         self.splat_renderer.add_splats(more_splats)
 
     def _apply_fr3_joint_limits(self):
@@ -186,7 +186,7 @@ class PourMustardEnv(ManagerBasedRLSplatEnv):
                                  device=robot.device)
         robot.write_joint_position_limit_to_sim(limits.expand(self.num_envs, 7, 2),
                                                 joint_ids=ids)
-        print("[polaris_lfhv] arm joint limits narrowed to the FR3-and-Panda intersection")
+        print("[r2s2r] arm joint limits narrowed to the FR3-and-Panda intersection")
 
     def _tag_raytraced_subtrees(self):
         """Semantically tag part of the robot so the composite takes the raytraced pixels.
@@ -200,14 +200,14 @@ class PourMustardEnv(ManagerBasedRLSplatEnv):
         for subtree in self.RAYTRACED_SUBTREES:
             prim = stage.GetPrimAtPath(f"/World/envs/env_0/robot/{subtree}")
             if not prim.IsValid():
-                print(f"[polaris_lfhv] no prim at robot/{subtree}, not tagging")
+                print(f"[r2s2r] no prim at robot/{subtree}, not tagging")
                 continue
             sem = Semantics.SemanticsAPI.Apply(prim, "class_raytraced")
             sem.CreateSemanticTypeAttr()
             sem.CreateSemanticDataAttr()
             sem.GetSemanticTypeAttr().Set("class")
             sem.GetSemanticDataAttr().Set("raytraced")
-            print(f"[polaris_lfhv] robot/{subtree} drawn by the raytracer")
+            print(f"[r2s2r] robot/{subtree} drawn by the raytracer")
 
     def custom_render(self, expensive: bool, transform_static: bool = False):
         rgb = super().custom_render(expensive, transform_static)
@@ -224,7 +224,7 @@ class PourMustardEnv(ManagerBasedRLSplatEnv):
 
 
 # The primary environment is marker free, matching GSWorld's shipped final: ArUcos and the
-# dangling arm cables painted out, table-top cables kept (2026-08-12 user decision).
+# dangling arm cables painted out, table-top cables kept (decision of 2026-08-12).
 gym.register(
     id="DROID-PourMustard",
     entry_point=PourMustardEnv,

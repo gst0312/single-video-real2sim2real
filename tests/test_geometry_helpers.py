@@ -4,9 +4,9 @@ import numpy as np
 import pytest
 
 import make_initial_conditions as mic
-from polaris_lfhv.alignment import umeyama
-from polaris_lfhv.pour_geometry import rotate
-from polaris_lfhv.robot_links import quat_to_mat, sample_mesh
+from r2s2r.alignment import umeyama
+from r2s2r.pour_geometry import rotate
+from r2s2r.robot_links import quat_to_mat, sample_mesh
 
 
 def random_quat(rng):

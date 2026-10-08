@@ -13,7 +13,7 @@ An episode has `episode_metadata` and `steps`.
 
 `episode_metadata` holds two strings, `file_path` and `recording_folderpath`. In the official
 data they are equal and look like
-`success_/media/.../projects/real2simeval/demos/kanav_cloth_chairs/episode_14.npz`. They are
+`success_/media/.../projects/real2simeval/demos/<task>/episode_14.npz`. They are
 not for humans: openpi's reader builds `recording_folderpath + "--" + file_path + "--" + step`
 as a per-frame id for the filter table, so the pair must be unique per episode.
 

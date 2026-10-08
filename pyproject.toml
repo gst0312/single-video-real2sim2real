@@ -3,6 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
+# Distribution name = the repository; the importable package is `r2s2r` (src/r2s2r).
 name = "single-video-real2sim2real"
 version = "0.1.0"
 description = "One human video to synthetic robot data in a Gaussian-splat simulator, a pi0.5 LoRA fine-tune and a zero-shot Franka FR3 test, built on PolaRiS and Real2Render2Real"

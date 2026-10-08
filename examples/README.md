@@ -17,14 +17,14 @@ the stacks described in `docs/setup.md`.
 
 What the script does, and the expected output:
 
-1. Runs the kinematic gate (`polaris_lfhv.limits`) on the sample, on a copy played at double
+1. Runs the kinematic gate (`r2s2r.limits`) on the sample, on a copy played at double
    speed (fails the velocity budget at 1.12x), on that copy slowed by the synthesiser's rule
    (passes again), and on a copy that drives j6 below the FR3's 0.4398 rad floor (fails the
    limits; the velocity envelope's allowed speed there is zero, reported as "blocked", which
    is why slowing down cannot rescue such an episode).
-2. Evaluates the pour criterion (`polaris_lfhv.pour_geometry`) step by step on the sample's
+2. Evaluates the pour criterion (`r2s2r.pour_geometry`) step by step on the sample's
    object track with the 15-step dwell.
-3. Applies the physics gate (`polaris_lfhv.physics_gate`) to the three real replay reports in
+3. Applies the physics gate (`r2s2r.physics_gate`) to the three real replay reports in
    `results/phase3_rollouts/` and to one synthetic failure.
 
 ```

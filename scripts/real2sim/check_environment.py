@@ -32,7 +32,7 @@ from PIL import Image  # noqa: E402
 
 from polaris.utils import load_eval_initial_conditions  # noqa: E402
 
-import polaris_lfhv.environments  # noqa: E402,F401
+import r2s2r.environments  # noqa: E402,F401
 
 env_cfg = parse_env_cfg(args_cli.environment, device="cuda", num_envs=1, use_fabric=True)
 env = gym.make(args_cli.environment, cfg=env_cfg)

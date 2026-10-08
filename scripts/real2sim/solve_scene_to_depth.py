@@ -29,7 +29,7 @@ from scipy.spatial import cKDTree
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from polaris_lfhv.alignment import umeyama  # noqa: E402
+from r2s2r.alignment import umeyama  # noqa: E402
 
 ROLLOUTS = Path(os.path.join(os.environ.get("GSWORLD_ROOT", "GSWorld"), "data/random_rollouts_20260710/20260710"))
 

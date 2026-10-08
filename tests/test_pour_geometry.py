@@ -2,7 +2,7 @@
 import numpy as np
 import pytest
 
-from polaris_lfhv.pour_geometry import DwellCounter, pour_condition, pour_measurements, rotate
+from r2s2r.pour_geometry import DwellCounter, pour_condition, pour_measurements, rotate
 
 UPRIGHT = np.array([np.sqrt(0.5), np.sqrt(0.5), 0.0, 0.0])   # +90 deg about x: mesh +Y -> world +Z
 MOUTH, RIM, RADIUS = 0.166, 0.1152, 0.0468                   # bottle height, cup rim, cup radius

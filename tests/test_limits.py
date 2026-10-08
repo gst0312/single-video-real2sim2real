@@ -4,7 +4,7 @@ too-fast episode. Pure numpy; numbers are the ones documented in docs/fr3_limits
 import numpy as np
 import pytest
 
-from polaris_lfhv import limits as L
+from r2s2r import limits as L
 
 
 def smooth_path(start, delta, n, rate=L.RATE_HZ):

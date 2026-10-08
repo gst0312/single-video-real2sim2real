@@ -44,7 +44,7 @@ whose semantic id ≥ 2 in Isaac Sim's raytraced render. Labels are assigned in
 `setup_splat_world_and_robot_views`: any rigid object without `assets/<name>/splat.ply` gets
 `class=raytraced`, so "splat if available, raytraced otherwise" is automatic. We tag the
 `Gripper` subtree with the same label so the gripper is raytraced
-(`src/polaris_lfhv/environments/__init__.py`).
+(`src/r2s2r/environments/__init__.py`).
 
 The robot is the third kind: `nvidia_droid/SEGMENTED/` holds one ply per link, transformed by
 link pose at run time and rendered together. `droid_cfg.py`'s `robot_splat` flag set to False

@@ -1,6 +1,6 @@
 """Offline trajectory synthesis: demo object track -> batched reference joint trajectories.
 
-This is plan §2's "Phase 1 assembly": r2r2r's synthesis organs, taken out of their
+This is the offline assembly: r2r2r's synthesis organs, taken out of their
 isaaclab_viser simulation class and run offline, with no isaacsim dependency. Organ map
 (details in provenance):
 
@@ -51,10 +51,10 @@ r2r2r never needed (their data was never executed open loop on hardware):
   trajectory is both executable on the FR3 and replayable in PolaRiS's Panda-limited USD;
 - joint velocity under the tightest of every limit on file, per joint and per step
   (`fr3_velocity_window`): FR3's position-dependent envelope from libfranka's
-  `rate_limiting.h` (verified verbatim against $REFS, 2026-08-13),
+  `rate_limiting.h` (verified verbatim against the libfranka source, 2026-08-13),
   capped by the constant ceiling, which for this robot is the deployment execution
   layer's soft-safety wall (1.575 rad/s J1-4, 2.01 J5-7), not FR3's catalogue 2.62/5.26/
-  4.18. That wall is second-hand - LFHV's transcription of the NUC's
+  4.18. That wall is second-hand - a transcription of the robot controller's
   config/fr3/franka_hardware.yaml, which is not reachable from this machine - and is
   recorded as such in provenance; it is used because it is stricter than every official
   number, so it can only make the gate safer;
@@ -67,9 +67,9 @@ r2r2r never needed (their data was never executed open loop on hardware):
   velocity gate (real peak 1.39 rad/s, 0.69 of the soft wall) and retires the jerk gate
   (real max 513 against libfranka's 5000), which is reported but not enforced;
 - the gripper stays out of the cup. Five proxy points carried by the achieved TCP pose
-  must never be inside the cup's cylinder (radius + 1 cm) below the rim + 2 cm - LFHV's
-  `cup_violations` (`tools/datagen/gen_kinematic_states.py:230,257`), which they wrote for
-  this same task and this same cup. It belongs to the collision family the physics gate is
+  must never be inside the cup's cylinder (radius + 1 cm) below the rim + 2 cm - the
+  earlier lab pipeline's `cup_violations` check, written for this same task and this same
+  cup. It belongs to the collision family the physics gate is
   for: the first physics rollout had the bottle sweep through the cup and shove it 8.2 cm,
   which no kinematic check on the arm alone would have seen.
 
@@ -142,7 +142,7 @@ TRAJ_INTERP_PROPORTION = 0.6               # franka_coffee_maker.py L489: leadin
 # pure-numpy part of this script and live in the package (docs/fr3_limits.md explains
 # every number). Imported rather than redefined so the environment, the real-robot
 # watchdog and the tests all gate on the same arrays.
-from polaris_lfhv.limits import (  # noqa: E402
+from r2s2r.limits import (  # noqa: E402
     ACC_MAX, DEPLOY_V_SOFT, ENVELOPE_HIGH, ENVELOPE_LOW, FR3_ACC_MAX, FR3_JERK_MAX,
     FR3_V_A_HI, FR3_V_A_LO, FR3_V_C, FR3_V_K, FR3_V_MAX, HOME, LIMITS_HIGH, LIMITS_LOW,
     RAMP_BUDGET, RATE_HZ, SAFE_HIGH, SAFE_LOW, VEL_CEILING, fr3_velocity_window, home_ramp,
@@ -150,15 +150,15 @@ from polaris_lfhv.limits import (  # noqa: E402
 
 # Gripper stand-in for the cup-clearance check, in the TCP frame (x = closing axis,
 # z = approach). Five points: the grip centre, the two finger tips at the half-span, and
-# the two knuckles set back along the approach. Same shape and the same numbers as LFHV's
-# last round (`tools/datagen/gen_kinematic_states.py:230`), with their y - the finger
-# opening direction - mapped onto our x, which is where our measured closing axis lives.
+# the two knuckles set back along the approach. Same shape and the same numbers as the
+# earlier lab pipeline's check, with its y - the finger opening direction - mapped onto
+# our x, which is where our measured closing axis lives.
 GRIPPER_PROXY = np.array([[0.0, 0.0, 0.0],
                           [0.05, 0.0, 0.0], [-0.05, 0.0, 0.0],
                           [0.06, 0.0, -0.06], [-0.06, 0.0, -0.06]])
 # Cup, measured from the mesh by the pour rubric at run time and hardcoded here because
-# the synthesiser has no USD stage: radius 0.0468 m, rim 0.1152 m above its base. LFHV
-# used 0.047 and 0.115 for the same cup, solved independently.
+# the synthesiser has no USD stage: radius 0.0468 m, rim 0.1152 m above its base. The
+# earlier lab pipeline used 0.047 and 0.115 for the same cup, solved independently.
 CUP_RADIUS = 0.0468
 CUP_RIM = 0.1152
 CUP_MARGIN = 0.01      # their `cup_margin`
@@ -249,9 +249,9 @@ class Synthesiser:
         self.a = self.a_inv.inverse()        # flange -> TCP, for the cup clearance check
 
         # The axis the demonstration tilts the bottle about, in the bottle's own frame.
-        # LFHV chose the pour grasp so its closing axis is parallel to this ("alignment
-        # 1.00, so pouring is roughly a spin about the held axis"); anything else pours by
-        # swinging the arm. Measured here rather than copied: 86.9 degrees about
+        # The earlier lab pipeline chose its pour grasp so the closing axis is parallel to
+        # this ("alignment 1.00, so pouring is roughly a spin about the held axis"); anything
+        # else pours by swinging the arm. Measured here rather than copied: 86.9 degrees about
         # (0.003, -0.150, -0.989) in the bottle frame, i.e. across the bottle, perpendicular
         # to its long axis.
         from scipy.spatial.transform import Rotation
@@ -283,7 +283,7 @@ class Synthesiser:
 
         This only works because the cup does not move: the pour is the demonstrated one, in
         the demonstrated place. Conditions come from `make_initial_conditions.py`, which
-        follows LFHV's last round and keeps the cup at its demo pose while perturbing the
+        follows the earlier lab recipe and keeps the cup at its demo pose while perturbing the
         bottle. A moved cup would need the trailing edge retargeted too, which is a
         different problem - so it is refused rather than silently mishandled.
         """
@@ -349,8 +349,8 @@ class Synthesiser:
     def grasp_shape_ok(self):
         """Keep only the candidates that grasp the way the demonstration is poured from.
 
-        Two shape criteria, both taken from LFHV's last round, which states them for this
-        exact task and cup (`tools/datagen/gen_kinematic_states.py:71-77`): "The pour task
+        Two shape criteria, both taken from the earlier lab pipeline, which states them for
+        this exact task and cup: "The pour task
         uses a side grasp. A top grasp puts the palm over the spout and needs a large arm
         excursion to tilt. ... its closing axis is parallel to the demo's tilt axis
         (alignment 1.00, so pouring is roughly a spin about the held axis), it approaches
@@ -380,8 +380,8 @@ class Synthesiser:
         """Which grasp candidates can this condition's key poses be reached with at all?
 
         r2r2r draws a grasp at random per episode and lets the kinematic checks throw the
-        bad ones away, which is also what plan §3 says to do - "which grasp to use is left
-        to the kinematic checks and the physics gate". At their end poses that is cheap;
+        bad ones away, which was also the original intent here: which grasp to use is left
+        to the kinematic checks and the physics gate. At their end poses that is cheap;
         at ours it is not, because the pour turns the flange about 84 degrees off upright
         (measured on the demonstration) and most of the 960 candidates ask for a wrist the
         FR3 does not have. Screening first turns a 7% episode yield into a usable one and
@@ -576,11 +576,11 @@ def main():
                    help="our tabletop, where the conditions put an object's base; the "
                         "demonstrated path is shifted in z onto it")
     p.add_argument("--grasp-align", type=float, default=0.90,
-                   help="minimum |closing axis . demo tilt axis|; LFHV's hand-picked "
-                        "candidate is 1.00, so the pour is a spin about the held axis")
+                   help="minimum |closing axis . demo tilt axis|; the earlier lab pipeline's "
+                        "hand-picked candidate is 1.00, so the pour is a spin about the held axis")
     p.add_argument("--approach-deg", type=float, nargs=2, default=[10.0, 40.0],
                    help="how far below horizontal the gripper may approach. A side grasp; "
-                        "LFHV's generated episodes measure 23-29 deg, a top grasp is 56")
+                        "the earlier pipeline's episodes measure 23-29 deg, a top grasp is 56")
     p.add_argument("--cup-tolerance", type=float, default=0.08,
                    help="how far the condition's cup may sit from the demonstration's "
                         "before the trailing edge of the path stops being valid")

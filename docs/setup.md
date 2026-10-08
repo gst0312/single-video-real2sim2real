@@ -104,7 +104,7 @@ and the registration of this project's training config in `training/config.py` i
 `*polaris_config.get_polaris_configs(),`:
 
 ```python
-import polaris_lfhv.training.pour_mustard_config as pour_mustard_config
+import r2s2r.training.pour_mustard_config as pour_mustard_config
 ...
 *pour_mustard_config.get_configs(),
 ```

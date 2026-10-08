@@ -37,7 +37,7 @@ import torch
 from polaris.environments.rubrics import Rubric
 from polaris.environments.rubrics import checkers
 
-from polaris_lfhv.pour_geometry import pour_condition, pour_measurements, rotate
+from r2s2r.pour_geometry import pour_condition, pour_measurements, rotate
 
 IDENTITY_POS = torch.zeros(3)
 IDENTITY_QUAT = torch.tensor([1.0, 0.0, 0.0, 0.0])
@@ -106,7 +106,7 @@ def pouring(bottle, cup, tilt_deg=60.0, dwell=15, rim_clearance=(0.0, 0.30),
                 "rim": float(c_hi[1]),
                 "radius": float(min(c_hi[0] - c_lo[0], c_hi[2] - c_lo[2]) / 2),
             }
-            print(f"[polaris_lfhv] pour rubric geometry from the assets: "
+            print(f"[r2s2r] pour rubric geometry from the assets: "
                   f"bottle mouth {state['geom']['mouth']:.4f} m up its own axis, "
                   f"cup rim {state['geom']['rim']:.4f} m, "
                   f"cup radius {state['geom']['radius']:.4f} m")

@@ -35,8 +35,8 @@ from jaxmp.extras.urdf_loader import load_urdf
 # the pure-numpy pieces live in the package so they can be tested without the heavy
 # dependencies; make the repository's src importable when the package is not installed
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from polaris_lfhv.limits import LIMITS_HIGH, LIMITS_LOW  # noqa: E402
-from polaris_lfhv.physics_gate import CUP_MAX, GAP_MAX, LIFT_MIN, passes_physics_gate  # noqa: E402
+from r2s2r.limits import LIMITS_HIGH, LIMITS_LOW  # noqa: E402
+from r2s2r.physics_gate import CUP_MAX, GAP_MAX, LIFT_MIN, passes_physics_gate  # noqa: E402
 
 
 def passed(report_dir, stem, lift_min=LIFT_MIN, gap_max=GAP_MAX, cup_max=CUP_MAX):

@@ -81,8 +81,8 @@ from plyfile import PlyData, PlyElement  # noqa: E402
 from scipy.spatial import cKDTree  # noqa: E402
 from sklearn.neighbors import KNeighborsClassifier  # noqa: E402
 
-import polaris_lfhv.environments  # noqa: E402,F401
-from polaris_lfhv.robot_links import body_frames, collect_meshes, quat_to_mat  # noqa: E402
+import r2s2r.environments  # noqa: E402,F401
+from r2s2r.robot_links import body_frames, collect_meshes, quat_to_mat  # noqa: E402
 
 
 def quat_mul(a, b):

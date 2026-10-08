@@ -53,7 +53,7 @@ from isaacsim.core.utils.xforms import get_world_pose  # noqa: E402
 from scipy.optimize import least_squares  # noqa: E402
 from scipy.spatial.transform import Rotation  # noqa: E402
 
-import polaris_lfhv.environments  # noqa: E402,F401
+import r2s2r.environments  # noqa: E402,F401
 
 
 def euler_xyz(rx, ry, rz):

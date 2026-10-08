@@ -1,9 +1,9 @@
 """Does our RLDS come out of openpi's loader in the same units the base model was trained in?
 
-plan §4 makes this a hard gate and says it must be run on real data, not read off the code:
-an action-unit or convention error here is silent - training converges on something, the
-policy just moves wrong on the robot. LFHV lost a real-robot run to exactly that class of
-bug (raw rad/s executed as normalised commands).
+This is a hard gate and must be run on real data, not read off the code: an action-unit
+or convention error here is silent - training converges on something, the policy just
+moves wrong on the robot. An earlier lab pipeline lost a real-robot run to exactly that
+class of bug (raw rad/s executed as normalised commands).
 
 Three things are checked, in the order they would go wrong:
 

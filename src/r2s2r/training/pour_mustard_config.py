@@ -14,22 +14,22 @@ What changes, and why each one:
    No `filter_dict_path`: openpi then builds a lookup table whose default is True, so every
    frame passes (`droid_rlds_dataset.py:110-113`).
 2. `rlds_data_dir` is where `scripts/datagen/build_rlds.py` wrote.
-3. `num_train_steps` 1000 -> 10000 (user's call).
+3. `num_train_steps` 1000 -> 10000.
 4. LoRA. The official config is a FULL fine-tune, and switching to LoRA is three changes
    that must agree with each other, none of which fails loudly if you forget it:
    the two `*_variant="..._lora"` fields on the model; a `freeze_filter` built from a
    Pi0Config carrying THE SAME arguments (the default is `nnx.Nothing`, i.e. nothing is
    frozen and you have silently done a full fine-tune); and `ema_decay=None`, which
-   openpi's own LoRA example spells out. LFHV's last round used exactly this triple, which
-   is the cross-check that it is right.
+   openpi's own LoRA example spells out. An earlier lab pipeline used exactly this triple,
+   which is the cross-check that it is right.
 5. `batch_size` 128 -> 32. The official 128 is not a free-standing choice: it comes with
    that config's `datasets`, which co-train on DROID (weight 0.9) plus the cotrain mix -
    a dataset of a completely different order from our ~170 episodes. Every reference that
    fine-tunes a single task on a small set uses 32: openpi's own `TrainConfig` default is
-   32, all of LFHV's pour and place configs are 32, and r2r2r's reported π0-FAST recipe is
-   32 as well (second-hand - their repo points policy training at an external openpi fork,
-   so that one could not be verified here). 32 with the official lr 5e-5 is exactly what
-   LFHV ran, so the pairing has a precedent.
+   32, the earlier lab pipeline's pour and place configs are 32, and r2r2r's reported
+   π0-FAST recipe is 32 as well (second-hand - their repo points policy training at an
+   external openpi fork, so that one could not be verified here). 32 with the official lr
+   5e-5 is exactly what the earlier pipeline ran, so the pairing has a precedent.
 
    `batch_size` is the GLOBAL batch and `scripts/train.py:198` asserts it divides the
    device count; with `fsdp_devices=1` the mesh is `(devices, 1)`, i.e. plain data parallel
@@ -38,8 +38,9 @@ What changes, and why each one:
    all-reduces - so the run uses four, eight samples each, which also leaves cards free for
    the sim evaluation of intermediate checkpoints.
 
-`action_horizon` stays 15, NOT the 16 LFHV used: it has to match the checkpoint being
-loaded, and ours is PolaRiS's joint-position DROID model while theirs was pi05_droid.
+`action_horizon` stays 15, NOT the 16 the earlier pipeline used: it has to match the
+checkpoint being loaded, and ours is PolaRiS's joint-position DROID model while theirs was
+pi05_droid.
 The norm stats path follows the same rule - the base checkpoint's own assets, never
 recomputed.
 
@@ -50,7 +51,7 @@ third-person view is occluded by the arm at exactly that moment. Nothing to conf
 Register it by adding these two lines to openpi's `training/config.py`, next to the
 existing `*polaris_config.get_polaris_configs(),`:
 
-    import polaris_lfhv.training.pour_mustard_config as pour_mustard_config
+    import r2s2r.training.pour_mustard_config as pour_mustard_config
     ...
     *pour_mustard_config.get_configs(),
 """

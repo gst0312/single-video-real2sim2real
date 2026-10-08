@@ -7,8 +7,7 @@ in the same simulator on held-out placements, and runs it zero-shot on a real Fr
 is a research integration on top of two published systems, PolaRiS (the splat-rendered
 IsaacLab evaluation stack and its DROID policy conventions) and Real2Render2Real (the
 single-video trajectory-synthesis method), with the scene asset converted from a GSWorld
-reconstruction. The project was internally called LFHV (learning from human video); the
-package is still named `polaris_lfhv` so that paths in the documentation stay valid.
+reconstruction. The importable package is `r2s2r` (real-to-sim-to-real).
 
 <p align="center">
 <img src="results/figures/demo_frame_real_vs_sim.jpg" width="48%"> <img src="results/figures/replay_randomwalk_2_f673_external_real_vs_sim.jpg" width="48%"><br>
@@ -37,19 +36,19 @@ Each stage maps to a script; Isaac-side stages run through `scripts/polaris_env.
    FR3-and-Panda intersection), libfranka's position-dependent velocity envelope capped by the
    deployment soft wall, a measured acceleration ceiling, IK error and gripper-to-cup
    clearance; an episode that only exceeds the motion budget is re-synthesised slower rather
-   than dropped. Gate maths: `polaris_lfhv.limits`; numbers: `docs/fr3_limits.md`.
+   than dropped. Gate maths: `r2s2r.limits`; numbers: `docs/fr3_limits.md`.
 4. **Physics replay and gating** (`scripts/datagen/replay_reference_episode.py`). Each
    reference trajectory is replayed open loop in the PolaRiS environment as 8-d DROID actions
    (seven absolute joint positions plus a binary gripper); the bottle moves only if it is
    actually gripped. A pour rubric written in PolaRiS's checker style
-   (`polaris_lfhv/environments/rubrics.py`) scores the task; the physics gate
-   (`polaris_lfhv.physics_gate`) keeps the episodes that grasped, carried and did not knock
+   (`r2s2r/environments/rubrics.py`) scores the task; the physics gate
+   (`r2s2r.physics_gate`) keeps the episodes that grasped, carried and did not knock
    the cup. Both camera views are rendered in the same pass at 180×320.
 5. **Dataset** (`scripts/datagen/build_rlds.py`, `check_units.py`, `analyse_dataset.py`).
    DROID-RLDS in the schema of PolaRiS's official co-training dataset
    (`docs/data_format.md`), verified end to end through openpi's loader, and measured for
    coverage.
-6. **Fine-tuning** (`polaris_lfhv/training/pour_mustard_config.py`). openpi's
+6. **Fine-tuning** (`r2s2r/training/pour_mustard_config.py`). openpi's
    `pi05_droid_jointpos_polaris` configuration with the dataset swapped, LoRA enabled, batch
    32, 10k steps, official normalisation statistics. The config is registered into openpi;
    training itself is openpi's `scripts/train.py`.
@@ -135,7 +134,7 @@ the pick, carry and pour (ep09, ep11, ep12, ep13). 4/13 is not a success rate: n
 came before the placement issue was identified (the bottle was placed too far from the
 gripper for the training distribution), and once the placement was moved in, three
 consecutive episodes succeeded. A fixed-placement run of ten or more episodes has not been
-done.
+done. [Demo video (Google Drive)](https://drive.google.com/file/d/1L6XNSg5zBRMjBuRxUfQErBS44NhcPLfO/view?usp=drive_link).
 
 **Scene fidelity** against eight real recordings (arm posed at the recorded joint angles):
 exterior PSNR about 17 at the chosen exposure, whole-frame IoU 0.89-0.90, arm silhouette IoU
@@ -157,7 +156,7 @@ stacks are external checkouts located through environment variables:
 | `TWODGS`, `TRAJ_VENV`, `RLDS_VENV` | the 2DGS checkout and the two offline venvs |
 | `DEMO_TRACK` | the demonstration's tracked object trajectory (not included) |
 
-The pure-Python part of this repository (the package's `limits`, `physics_gate`,
+The pure-Python part of this repository (the `r2s2r` package's `limits`, `physics_gate`,
 `pour_geometry`, `alignment`, `robot_links` modules, the tests and the example) needs only
 numpy and scipy:
 
@@ -187,7 +186,7 @@ POLARIS_ROOT=... POLARIS_3DGS=... scripts/polaris_env.sh \
 ## Repository layout
 
 ```
-src/polaris_lfhv/
+src/r2s2r/
   limits.py                FR3-and-Panda limits, velocity envelope, motion budget, home ramp (numpy)
   physics_gate.py          which replayed episodes become data (numpy)
   pour_geometry.py         the pour criterion's geometry (numpy)
@@ -251,6 +250,12 @@ Also used: franka_description and libfranka (Franka Robotics), IsaacLab 2.3.0 an
 DROID platform and its RLDS builder template. Please cite the upstream papers when using this
 code; `CITATION.cff` is for this repository itself.
 
-The code and documentation in this repository are released under the MIT licence
-(`LICENSE`); the licence explicitly does not extend to GSWorld-derived assets, which are not
-included.
+## Assets and upstream licences
+
+The code and documentation written for this repository are released under the MIT licence
+(`LICENSE`). That licence does not cover, and this repository does not contain, the
+Gaussian-splat scene asset, object meshes, camera calibrations or recordings derived from
+GSWorld (github.com/luccachiang/GSWorld), which carries no licence file; without a GSWorld
+checkout the scene cannot be rebuilt. PolaRiS, Real2Render2Real and openpi are not
+redistributed here either and stay under their own licences (MIT, MIT and Apache-2.0) in
+their own repositories.
