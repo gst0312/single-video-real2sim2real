@@ -9,6 +9,9 @@ dist/
 
 # Large artifacts never go in the repository (see results/README.md for the Release)
 *.mp4
+# ...except the two short README demo clips (about 1 MB each)
+!results/videos/demo_sim.mp4
+!results/videos/demo_real.mp4
 *.npz
 *.ply
 *.usd

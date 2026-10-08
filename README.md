@@ -9,9 +9,16 @@ IsaacLab evaluation stack and its DROID policy conventions) and Real2Render2Real
 single-video trajectory-synthesis method), with the scene asset converted from a GSWorld
 reconstruction. The importable package is `r2s2r` (real-to-sim-to-real).
 
+## Demo
+
 <p align="center">
-<a href="https://drive.google.com/file/d/1L6XNSg5zBRMjBuRxUfQErBS44NhcPLfO/view?usp=drive_link"><img src="results/figures/demo_sim_to_real.gif" width="92%" alt="Simulation rollout, then the same policy zero-shot on the real Franka FR3"></a><br>
-<em>The fine-tuned policy in the Gaussian-splat simulator, then zero-shot on the real Franka FR3 (3× speed). Full 73 s video: <a href="results/videos/demo_sim_to_real.mp4">results/videos/demo_sim_to_real.mp4</a> · <a href="https://drive.google.com/file/d/1L6XNSg5zBRMjBuRxUfQErBS44NhcPLfO/view?usp=drive_link">Google Drive</a>.</em>
+<img src="results/figures/demo_sim.gif" width="92%" alt="Simulation: the fine-tuned policy in the Gaussian-splat reconstruction, external and wrist camera"><br>
+<em><b>Simulation.</b> The fine-tuned &pi;<sub>0.5</sub> policy on a held-out placement in the Gaussian-splat reconstruction (external camera left, wrist camera right). Video: <a href="results/videos/demo_sim.mp4">results/videos/demo_sim.mp4</a> (38 s).</em>
+</p>
+
+<p align="center">
+<img src="results/figures/demo_real.gif" width="92%" alt="Real robot: the same checkpoint zero-shot on the Franka FR3, 3x speed"><br>
+<em><b>Real robot, zero-shot.</b> The same checkpoint on the Franka FR3 with no real-world fine-tuning, 3&times; speed. Video: <a href="results/videos/demo_real.mp4">results/videos/demo_real.mp4</a> (35 s) &middot; <a href="https://drive.google.com/file/d/1L6XNSg5zBRMjBuRxUfQErBS44NhcPLfO/view?usp=drive_link">combined cut on Google Drive</a>.</em>
 </p>
 
 <p align="center">
