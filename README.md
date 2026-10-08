@@ -10,6 +10,11 @@ single-video trajectory-synthesis method), with the scene asset converted from a
 reconstruction. The importable package is `r2s2r` (real-to-sim-to-real).
 
 <p align="center">
+<a href="https://drive.google.com/file/d/1L6XNSg5zBRMjBuRxUfQErBS44NhcPLfO/view?usp=drive_link"><img src="results/figures/demo_sim_to_real.gif" width="92%" alt="Simulation rollout, then the same policy zero-shot on the real Franka FR3"></a><br>
+<em>The fine-tuned policy in the Gaussian-splat simulator, then zero-shot on the real Franka FR3 (3× speed). Full 73 s video: <a href="results/videos/demo_sim_to_real.mp4">results/videos/demo_sim_to_real.mp4</a> · <a href="https://drive.google.com/file/d/1L6XNSg5zBRMjBuRxUfQErBS44NhcPLfO/view?usp=drive_link">Google Drive</a>.</em>
+</p>
+
+<p align="center">
 <img src="results/figures/demo_frame_real_vs_sim.jpg" width="48%"> <img src="results/figures/replay_randomwalk_2_f673_external_real_vs_sim.jpg" width="48%"><br>
 <em>Left: a frame of the human demonstration beside the reconstructed scene with the objects placed where the tracker saw them. Right: a real recording of the arm beside the simulator posed at the same recorded joint angles.</em>
 </p>

@@ -1,7 +1,7 @@
 # results
 
 Small logs and summaries that back the numbers in `docs/results.md`, plus a few frames.
-Everything large (videos, the RLDS dataset, the checkpoint, scene assets) stays out of the
+The demonstration video is committed (`videos/demo_sim_to_real.mp4`, 5.3 MB, simulation rollout followed by the zero-shot real-robot run at 3× speed) together with its GIF (`figures/demo_sim_to_real.gif`). Everything else large (the per-episode comparison videos, the RLDS dataset, the checkpoint, scene assets) stays out of the
 repository.
 
 - `phase5_eval/` — checkpoint sweep on 30 held-out placements: one CSV per checkpoint
