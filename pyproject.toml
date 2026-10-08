@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "single-video-real2sim2real"
+version = "0.1.0"
+description = "One human video to synthetic robot data in a Gaussian-splat simulator, a pi0.5 LoRA fine-tune and a zero-shot Franka FR3 test, built on PolaRiS and Real2Render2Real"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Shiting Gong" }]
+requires-python = ">=3.11"
+# What the pure-Python parts (package modules, tests, examples, eval tooling) need.
+# The simulation, synthesis, dataset and training stacks are separate environments and
+# are NOT pip-installable from here; docs/setup.md lists them with their pinned versions.
+dependencies = [
+    "numpy>=1.26,<2.0",
+    "scipy>=1.11",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+# Offline trajectory synthesis (scripts/datagen/synthesize_trajectories.py, sample_grasps.py,
+# analyse_dataset.py). jax is pinned to what Real2Render2Real's stack was verified with;
+# jaxmp (uynitsuj/jaxmp d1ab9c7), jaxls (chungmin99/jaxls 21219e08) and trajgen
+# (uynitsuj/trajgen 6b19f56) are installed from git checkouts, see docs/setup.md.
+synthesis = [
+    "jax==0.5.3",
+    "jaxlie",
+    "trimesh",
+    "robot_descriptions",
+    "matplotlib",
+]
+# Reading and writing DROID-RLDS (scripts/datagen/build_rlds.py); versions follow openpi's
+# `rlds` dependency group and its lock file.
+rlds = [
+    "tensorflow-cpu==2.15.0",
+    "tensorflow-datasets==4.9.9",
+    "protobuf==4.25.8",
+    "tensorflow-metadata==1.17.1",
+]
+
+[project.urls]
+Repository = "https://github.com/gst0312/single-video-real2sim2real"
+PolaRiS = "https://github.com/arhanjain/polaris"
+Real2Render2Real = "https://github.com/uynitsuj/real2render2real"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite it as below, together with PolaRiS and Real2Render2Real (see README.md, Acknowledgments)."
+title: "single-video-real2sim2real: one human video to synthetic robot data in a Gaussian-splat simulator and a zero-shot Franka FR3 policy"
+type: software
+authors:
+  - family-names: Gong
+    given-names: Shiting
+    alias: Ting
+repository-code: "https://github.com/gst0312/single-video-real2sim2real"
+license: MIT
+date-released: 2026-10-08
+version: 0.1.0

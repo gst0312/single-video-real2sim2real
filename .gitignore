@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+
+# Large artifacts never go in the repository (see results/README.md for the Release)
+*.mp4
+*.npz
+*.ply
+*.usd
+*.usda
+*.usdz
+*.tfrecord*
+checkpoints/
+work/
+PolaRiS-Hub/
+
+# Editors and OS
+.DS_Store
+.thumbcache/
+*.thumb.jpg
+.idea/
+.vscode/
